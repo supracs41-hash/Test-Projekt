@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CSEngineering – 3D Druck • CNC • Plasma • Projekte</title>
+  <meta name="description" content="CSEngineering – 3D Druck, CNC, Plasma. Projekte ansehen und Anfragen senden." />
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#101826;
+      --panel2:#0f1624;
+      --text:#eaf0ff;
+      --muted:#a8b3c7;
+      --line:rgba(255,255,255,.08);
+      --accent:#55d6ff;
+      --accent2:#9dffb5;
+      --warn:#ffcf5a;
+      --shadow: 0 16px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 26px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 700px at 15% -10%, rgba(85,214,255,.20), transparent 55%),
+                  radial-gradient(900px 600px at 85% 0%, rgba(157,255,181,.14), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:24px; }
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background: rgba(11,15,20,.72);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:14px 24px;
+      max-width:1100px; margin:0 auto;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.3px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, rgba(85,214,255,.95), rgba(157,255,181,.85));
+      box-shadow: 0 10px 30px rgba(85,214,255,.18);
+    }
+    .nav{ display:flex; gap:14px; flex-wrap:wrap; }
+    .nav a{
+      color:var(--muted);
+      font-weight:650;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid transparent;
+    }
+    .nav a:hover{
+      color:var(--text);
+      border-color:var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    .cta{
+      display:flex; gap:10px; align-items:center;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--text);
+      font-weight:750;
+      cursor:pointer;
+      transition: transform .08s ease, border-color .15s ease, background .15s ease;
+      user-select:none;
+    }
+    .btn:hover{ border-color: rgba(85,214,255,.35); background: rgba(85,214,255,.08); }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn-primary{
+      border-color: rgba(85,214,255,.45);
+      background: linear-gradient(135deg, rgba(85,214,255,.18), rgba(157,255,181,.10));
+    }
+    .pill{
+      font-size:12px; font-weight:800;
+      color: rgba(234,240,255,.85);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding:6px 10px;
+      border-radius:999px;
+      display:inline-flex; gap:8px; align-items:center;
+    }
+
+    /* Hero */
+    .hero{
+      padding:44px 0 10px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns:1fr; }
+    }
+    .hero-card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(16,24,38,.86), rgba(10,14,20,.45));
+      box-shadow: var(--shadow);
+      border-radius: var(--radius2);
+      padding:26px;
+      overflow:hidden;
+      position:relative;
+      min-height: 320px;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(650px 260px at 10% 10%, rgba(85,214,255,.18), transparent 65%),
+                  radial-gradient(520px 280px at 90% 5%, rgba(157,255,181,.12), transparent 60%);
+      pointer-events:none;
+    }
+    .hero h1{
+      margin:10px 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing:-.5px;
+      line-height:1.06;
+      position:relative;
+    }
+    .hero p{
+      margin:0;
+      color: var(--muted);
+      max-width: 60ch;
+      position:relative;
+    }
+    .hero-actions{
+      margin-top:18px;
+      display:flex; gap:12px; flex-wrap:wrap;
+      position:relative;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .stat{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding:14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .stat b{ font-size:18px; }
+    .stat small{ display:block; color:var(--muted); margin-top:6px; }
+
+    /* Sections */
+    section{ padding:24px 0; }
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+      margin-bottom:14px;
+    }
+    .section-title h2{ margin:0; font-size:22px; letter-spacing:-.2px; }
+    .section-title p{ margin:0; color:var(--muted); }
+
+    /* Cards grid */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    @media (max-width: 900px){ .grid{ grid-template-columns:1fr; } }
+
+    .card{
+      border:1px solid var(--line);
+      background: rgba(16,24,38,.55);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .card h3{ margin:10px 0 6px; font-size:16px; }
+    .card p{ margin:0; color:var(--muted); font-size:14px; }
+    .icon{
+      width:42px; height:42px; border-radius:14px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      font-weight:900;
+    }
+
+    /* Projects */
+    .projects{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){ .projects{ grid-template-columns:1fr; } }
+
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 600px){ .gallery{ grid-template-columns:1fr; } }
+
+    .thumb{
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background:
+        radial-gradient(380px 190px at 20% 20%, rgba(85,214,255,.18), transparent 60%),
+        radial-gradient(420px 210px at 80% 20%, rgba(157,255,181,.14), transparent 60%),
+        rgba(255,255,255,.03);
+      padding:14px;
+      min-height: 130px;
+      position:relative;
+      overflow:hidden;
+    }
+    .thumb b{ display:block; margin-bottom:6px; }
+    .thumb small{ color:var(--muted); display:block; }
+    .tagrow{ margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+    .tag{ font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid var(--line); color:rgba(234,240,255,.9); background: rgba(255,255,255,.03); }
+
+    /* Shop */
+    .shopbar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      margin-bottom: 12px;
+    }
+    .search{
+      flex:1;
+      min-width: 220px;
+      display:flex; gap:10px; align-items:center;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    .search input{
+      width:100%;
+      background: transparent;
+      border:none;
+      outline:none;
+      color: var(--text);
+      font-size:14px;
+    }
+    .shop-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    @media (max-width: 900px){ .shop-grid{ grid-template-columns:1fr; } }
+
+    .product{
+      padding:16px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(16,24,38,.62), rgba(15,22,36,.38));
+      position:relative;
+      overflow:hidden;
+    }
+    .product:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(420px 220px at 10% 10%, rgba(85,214,255,.10), transparent 65%);
+      pointer-events:none;
+    }
+    .prod-top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      position:relative;
+    }
+    .price{
+      font-weight:900;
+      color: rgba(234,240,255,.95);
+      border: 1px solid rgba(85,214,255,.25);
+      background: rgba(85,214,255,.08);
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .product h3{ margin:10px 0 6px; position:relative; }
+    .product p{ margin:0; color:var(--muted); font-size:14px; position:relative; }
+    .product .meta{
+      margin-top:10px;
+      display:flex; gap:8px; flex-wrap:wrap;
+      position:relative;
+    }
+    .chip{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: rgba(234,240,255,.88);
+    }
+    .product .actions{
+      margin-top:14px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      position:relative;
+    }
+
+    /* Footer */
+    footer{
+      padding:22px 0 36px;
+      color: var(--muted);
+      border-top:1px solid var(--line);
+      margin-top: 24px;
+    }
+    footer .foot{
+      display:flex; gap:12px; justify-content:space-between; flex-wrap:wrap;
+      align-items:center;
+    }
+
+    /* Modal */
+    dialog{
+      width:min(680px, 92vw);
+      border:none;
+      border-radius: 22px;
+      padding:0;
+      background: rgba(16,24,38,.95);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    dialog::backdrop{
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(3px);
+    }
+    .modal-head{
+      padding:16px 16px 10px;
+      border-bottom:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .modal-head b{ font-size:15px; }
+    .x{
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:8px 10px;
+      cursor:pointer;
+      color: var(--text);
+      font-weight:900;
+    }
+    .modal-body{ padding:16px; }
+    .form{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 700px){ .form{ grid-template-columns:1fr; } }
+
+    .field{ display:flex; flex-direction:column; gap:7px; }
+    label{ font-size:12px; color: rgba(234,240,255,.85); font-weight:750; }
+    input, select, textarea{
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      padding:10px 12px;
+      outline:none;
+      font-size:14px;
+    }
+    textarea{ min-height: 120px; resize: vertical; grid-column: 1 / -1; }
+    .hint{ font-size:12px; color: var(--muted); margin-top:8px; }
+
+    .modal-actions{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+      padding:12px 16px 16px;
+      border-top:1px solid var(--line);
+    }
+
+    .toast{
+      margin-top:10px;
+      font-size:13px;
+      color: rgba(234,240,255,.9);
+      border:1px solid rgba(157,255,181,.22);
+      background: rgba(157,255,181,.07);
+      padding:10px 12px;
+      border-radius: 14px;
+      display:none;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div style="line-height:1.05">CSEngineering</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:700">3D Druck • CNC • Plasma • Projekte</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="#services">Dienste</a>
+        <a href="#projects">Projekte</a>
+        <a href="#shop">Mini-Shop</a>
+        <a href="#contact">Kontakt</a>
+      </nav>
+
+      <div class="cta">
+        <span class="pill">⚡ Antwort i.d.R. <b>24–48h</b></span>
+        <a class="btn btn-primary" href="#shop">Anfrage starten</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-card">
+        <span class="pill">🛠️ Prototypen • Einzelstücke • Kleinserie</span>
+        <h1>Fertigung & Projekte –<br/>von Idee bis Teil.</h1>
+        <p>
+          Ich biete 3D-Druck, CNC-Bearbeitung und CNC-Plasmaschneiden – plus individuelle Projekte.
+          Du siehst etwas im Portfolio oder im Mini-Shop? Dann schick mir eine Anfrage, und wir klären Preis, Material, Versand und Zeitrahmen direkt.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#services">Dienste ansehen</a>
+          <a class="btn" href="#projects">Projekte entdecken</a>
+          <a class="btn" href="#shop">Zum Mini-Shop</a>
+        </div>
+
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; position:relative;">
+          <span class="pill">✅ CAD-Support (STL/DXF/STEP)</span>
+          <span class="pill">✅ Material-Beratung</span>
+          <span class="pill">✅ Saubere Kommunikation</span>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <b>3D-Druck</b>
+          <small>FDM/Filament, Prototypen, Funktionsteile, Halterungen</small>
+        </div>
+        <div class="stat">
+          <b>CNC</b>
+          <small>Fräsen/Bohren (abhängig von Setup), saubere Kanten, Passungen</small>
+        </div>
+        <div class="stat">
+          <b>CNC-Plasma</b>
+          <small>Stahl/Alu (leitfähig), Schilder, Halter, Konturen</small>
+        </div>
+        <div class="stat">
+          <b>Projekte</b>
+          <small>Vom Einzelteil bis zum „Mach mal“ – dokumentiert im Portfolio</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="section-title">
+        <div>
+          <h2>Dienste</h2>
+          <p>Übersichtlich, ohne Blabla – was du bei mir bekommst.</p>
+        </div>
+        <span class="pill">🔧 Auf Wunsch: Angebot & Machbarkeitscheck</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="icon">🧵</div>
+          <h3>3D-Druck (FDM)</h3>
+          <p>Funktionsteile, Gehäuse, Prototypen. Materialauswahl nach Einsatz (Hitze, Stabilität, Optik).</p>
+        </div>
+        <div class="card">
+          <div class="icon">🧲</div>
+          <h3>CNC-Bearbeitung</h3>
+          <p>Bearbeitung von Werkstücken/Platten – ideal für Halter, Adapter, Kleinserien und Reparaturteile.</p>
+        </div>
+        <div class="card">
+          <div class="icon">🔥</div>
+          <h3>CNC-Plasma</h3>
+          <p>Konturen, Schilder, Halteplatten. Schnell & robust – perfekt für Werkstatt/Industrie-Look.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-title">
+        <div>
+          <h2>Projekte & Showcase</h2>
+          <p>Beispiele, wie du’s präsentieren könntest (kurz & knackig).</p>
+        </div>
+        <a class="btn" href="#shop">Gefällt dir was? → Anfrage</a>
+      </div>
+
+      <div class="projects">
+        <div class="card">
+          <h3 style="margin:0 0 10px;">Projekt-Galerie (Platzhalter)</h3>
+          <div class="gallery">
+            <div class="thumb">
+              <b>Werkstatt-Halterung</b>
+              <small>3D-Druck • PETG • 2 Iterationen</small>
+              <div class="tagrow">
+                <span class="tag">funktional</span><span class="tag">robust</span><span class="tag">schnell</span>
+              </div>
+            </div>
+            <div class="thumb">
+              <b>Plasma-Schild</b>
+              <small>Plasma • Stahl • entgratet</small>
+              <div class="tagrow">
+                <span class="tag">custom</span><span class="tag">logo</span><span class="tag">deko</span>
+              </div>
+            </div>
+            <div class="thumb">
+              <b>Adapterplatte</b>
+              <small>CNC • Alu • Passung</small>
+              <div class="tagrow">
+                <span class="tag">präzise</span><span class="tag">kleinserie</span>
+              </div>
+            </div>
+            <div class="thumb">
+              <b>Prototyp-Gehäuse</b>
+              <small>3D-Druck • ABS • Nacharbeit</small>
+              <div class="tagrow">
+                <span class="tag">prototyp</span><span class="tag">sauber</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="hint">
+            Tipp: Jede Kachel kann auf eine Detailseite verlinken (Fotos, Material, Maße, „Was war die Herausforderung?“).
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 style="margin:0 0 10px;">So läuft’s ab</h3>
+          <ol style="margin:0; padding-left:18px; color:var(--muted);">
+            <li>Du wählst im Mini-Shop einen Artikel (oder Projekt) und klickst <b>Anfragen</b>.</li>
+            <li>Formular ist vorbefüllt (Artikel, Menge, Wunschmaterial).</li>
+            <li>Ich melde mich mit Rückfragen/Angebot (Preis, Zeit, Versand).</li>
+            <li>Erst wenn alles passt: Zahlung/Versand individuell klären.</li>
+          </ol>
+
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+            <span class="pill">🧾 Angebot nach Aufwand</span>
+            <span class="pill">📦 Versand / Abholung</span>
+            <span class="pill">🕒 Realistische Lieferzeit</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP -->
+    <section id="shop">
+      <div class="section-title">
+        <div>
+          <h2>Mini-Shop</h2>
+          <p>Kein Checkout – nur “Gefällt mir → Anfrage”.</p>
+        </div>
+        <span class="pill">💡 Später erweiterbar zu echtem Shop</span>
+      </div>
+
+      <div class="shopbar">
+        <div class="search" role="search">
+          🔎
+          <input id="search" placeholder="Suchen: z.B. Halter, Schild, Adapter …" autocomplete="off" />
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn" data-filter="all">Alle</button>
+          <button class="btn" data-filter="3d">3D-Druck</button>
+          <button class="btn" data-filter="cnc">CNC</button>
+          <button class="btn" data-filter="plasma">Plasma</button>
+        </div>
+      </div>
+
+      <div class="shop-grid" id="shopGrid">
+        <!-- Product 1 -->
+        <article class="product" data-kind="3d" data-title="Werkstatt-Halter (universal)">
+          <div class="prod-top">
+            <span class="pill">🧵 3D-Druck</span>
+            <span class="price">ab 12 €*</span>
+          </div>
+          <h3>Werkstatt-Halter (universal)</h3>
+          <p>Halterung für Kabel/Schlauch/Werkzeug. Anpassbar (Lochbild, Breite, Beschriftung).</p>
+          <div class="meta">
+            <span class="chip">PETG/ABS</span>
+            <span class="chip">individuell</span>
+            <span class="chip">schnell</span>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary"
+              data-open-inquiry
+              data-item="Werkstatt-Halter (universal)"
+              data-service="3D-Druck"
+              data-suggest="PETG"
+              data-price="ab 12 €">
+              Anfrage
+            </button>
+            <button class="btn" data-open-inquiry
+              data-item="Werkstatt-Halter (universal)"
+              data-service="3D-Druck"
+              data-suggest="ABS"
+              data-price="ab 12 €">
+              Alternative (ABS)
+            </button>
+          </div>
+        </article>
+
+        <!-- Product 2 -->
+        <article class="product" data-kind="plasma" data-title="Plasma-Schild (Logo/Name)">
+          <div class="prod-top">
+            <span class="pill">🔥 Plasma</span>
+            <span class="price">ab 35 €*</span>
+          </div>
+          <h3>Plasma-Schild (Logo/Name)</h3>
+          <p>Metallschild nach DXF/Sketch. Optional: Entgraten, Bohrungen, Lack/Finish.</p>
+          <div class="meta">
+            <span class="chip">Stahl</span>
+            <span class="chip">DXF</span>
+            <span class="chip">Finish optional</span>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary"
+              data-open-inquiry
+              data-item="Plasma-Schild (Logo/Name)"
+              data-service="CNC-Plasma"
+              data-suggest="Stahl 3mm"
+              data-price="ab 35 €">
+              Anfrage
+            </button>
+            <a class="btn" href="#projects">Beispiele</a>
+          </div>
+        </article>
+
+        <!-- Product 3 -->
+        <article class="product" data-kind="cnc" data-title="Adapterplatte (nach Maß)">
+          <div class="prod-top">
+            <span class="pill">🧲 CNC</span>
+            <span class="price">ab 49 €*</span>
+          </div>
+          <h3>Adapterplatte (nach Maß)</h3>
+          <p>Frästeil nach Zeichnung/STEP. Ideal für Halterungen, Montageplatten, Reparaturteile.</p>
+          <div class="meta">
+            <span class="chip">Alu</span>
+            <span class="chip">STEP/DXF</span>
+            <span class="chip">Passung</span>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary"
+              data-open-inquiry
+              data-item="Adapterplatte (nach Maß)"
+              data-service="CNC"
+              data-suggest="Alu 6082"
+              data-price="ab 49 €">
+              Anfrage
+            </button>
+            <button class="btn" data-open-inquiry
+              data-item="Adapterplatte (nach Maß)"
+              data-service="CNC"
+              data-suggest="Kunststoff (POM)"
+              data-price="ab 49 €">
+              Alternative (POM)
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <p class="hint">
+        * Platzhalterpreise: In echt würdest du hier „ab“ oder „auf Anfrage“ lassen, weil Material/Maße/Finish viel ausmachen.
+      </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-title">
+        <div>
+          <h2>Kontakt</h2>
+          <p>Wenn du nichts im Shop findest: schick eine freie Anfrage.</p>
+        </div>
+        <button class="btn btn-primary" id="openBlank">Neue Anfrage</button>
+      </div>
+
+      <div class="card">
+        <p style="margin:0;">
+          📩 <b>Kontakt bevorzugt über Formular</b> (weniger Spam).<br/>
+          Backup-Mail (obfuskiert): <span style="color:rgba(234,240,255,.95); font-weight:800;">info [at] csengineering [dot] de</span>
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="foot">
+        <div>© <span id="year"></span> CSEngineering</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="btn" href="#">Impressum</a>
+          <a class="btn" href="#">Datenschutz</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Inquiry Modal -->
+  <dialog id="inquiryModal" aria-label="Anfrage senden">
+    <div class="modal-head">
+      <b>📨 Anfrage senden</b>
+      <button class="x" id="closeModal" aria-label="Schließen">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <form id="inquiryForm" class="form">
+        <!-- Honeypot (für später im Backend auswerten) -->
+        <div class="field" style="display:none;">
+          <label>Website</label>
+          <input type="text" name="website" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label>Artikel / Projekt</label>
+          <input type="text" name="item" id="fItem" required />
+        </div>
+
+        <div class="field">
+          <label>Service</label>
+          <select name="service" id="fService">
+            <option>3D-Druck</option>
+            <option>CNC</option>
+            <option>CNC-Plasma</option>
+            <option>Sonstiges</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Name *</label>
+          <input type="text" name="name" id="fName" required />
+        </div>
+
+        <div class="field">
+          <label>E-Mail *</label>
+          <input type="email" name="email" id="fEmail" required />
+        </div>
+
+        <div class="field">
+          <label>Menge</label>
+          <input type="number" min="1" value="1" name="qty" id="fQty" />
+        </div>
+
+        <div class="field">
+          <label>Wunschmaterial / Hinweis</label>
+          <input type="text" name="material" id="fMaterial" placeholder="z.B. PETG, Stahl 3mm, Alu 6082 …" />
+        </div>
+
+        <textarea name="message" id="fMessage" required
+          placeholder="Kurz beschreiben: Maße, Einsatz, Finish, Deadline, Datei vorhanden (STL/DXF/STEP) …"></textarea>
+
+        <div class="hint" style="grid-column:1/-1;">
+          Dieses Demo-Formular sendet noch nichts ab. Später: POST an <code>contact.php</code> auf deinem IONOS-Webspace.
+        </div>
+      </form>
+
+      <div class="toast" id="toast"></div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn" id="copyPayload">Daten kopieren</button>
+      <button class="btn btn-primary" id="sendFake">Anfrage „absenden“ (Demo)</button>
+    </div>
+  </dialog>
+
+  <script>
+    // ---- Tiny helpers ----
+    const $ = (s, el=document) => el.querySelector(s);
+    const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
+
+    // ---- Footer year ----
+    $("#year").textContent = new Date().getFullYear();
+
+    // ---- Modal open/close ----
+    const modal = $("#inquiryModal");
+    const toast = $("#toast");
+
+    const fItem = $("#fItem");
+    const fService = $("#fService");
+    const fMaterial = $("#fMaterial");
+    const fMessage = $("#fMessage");
+
+    const openModal = ({ item="(freie Anfrage)", service="Sonstiges", material="", price="" } = {}) => {
+      fItem.value = item;
+      fService.value = service;
+      fMaterial.value = material;
+
+      const base = [
+        `Hallo,`,
+        `ich interessiere mich für: ${item}`,
+        price ? `Richtwert: ${price}` : ``,
+        ``,
+        `Fragen/Details:`,
+        `- Maße/Material/Finish:`,
+        `- Stückzahl:`,
+        `- Datei (STL/DXF/STEP) vorhanden?:`,
+        ``,
+        `Viele Grüße`
+      ].filter(Boolean).join("\n");
+
+      fMessage.value = base;
+      toast.style.display = "none";
+      modal.showModal();
+    };
+
+    $("#closeModal").addEventListener("click", () => modal.close());
+    modal.addEventListener("click", (e) => {
+      const rect = modal.getBoundingClientRect();
+      const inDialog = rect.top <= e.clientY && e.clientY <= rect.bottom && rect.left <= e.clientX && e.clientX <= rect.right;
+      if (!inDialog) modal.close();
+    });
+
+    // Open from product buttons
+    $$("[data-open-inquiry]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        openModal({
+          item: btn.dataset.item,
+          service: btn.dataset.service,
+          material: btn.dataset.suggest || "",
+          price: btn.dataset.price || ""
+        });
+      });
+    });
+
+    // Open blank
+    $("#openBlank").addEventListener("click", () => openModal({}));
+
+    // ---- Shop filter/search ----
+    const grid = $("#shopGrid");
+    const products = $$(".product", grid);
+
+    let currentFilter = "all";
+    const applyFilter = () => {
+      const q = ($("#search").value || "").toLowerCase().trim();
+      products.forEach(p => {
+        const kind = p.dataset.kind;
+        const title = (p.dataset.title || "").toLowerCase();
+        const text = (p.innerText || "").toLowerCase();
+        const matchFilter = currentFilter === "all" || currentFilter === kind;
+        const matchQuery = !q || title.includes(q) || text.includes(q);
+        p.style.display = (matchFilter && matchQuery) ? "" : "none";
+      });
+    };
+
+    $$(".shopbar .btn[data-filter]").forEach(b => {
+      b.addEventListener("click", () => {
+        currentFilter = b.dataset.filter;
+        applyFilter();
+      });
+    });
+    $("#search").addEventListener("input", applyFilter);
+
+    // ---- Demo submit / copy ----
+    const buildPayload = () => {
+      const form = $("#inquiryForm");
+      const fd = new FormData(form);
+      const payload = Object.fromEntries(fd.entries());
+      payload.page = location.href;
+      payload.ts = new Date().toISOString();
+      return payload;
+    };
+
+    $("#sendFake").addEventListener("click", () => {
+      const payload = buildPayload();
+
+      // In echt würdest du hier fetch("contact.php", {method:"POST", body: ...}) machen.
+      console.log("DEMO payload:", payload);
+
+      toast.textContent = "✅ Demo: Anfrage erstellt (siehe Console). Später hier an contact.php senden.";
+      toast.style.display = "block";
+    });
+
+    $("#copyPayload").addEventListener("click", async () => {
+      const payload = buildPayload();
+      const text = JSON.stringify(payload, null, 2);
+      try{
+        await navigator.clipboard.writeText(text);
+        toast.textContent = "📋 Anfrage-Daten kopiert.";
+        toast.style.display = "block";
+      }catch{
+        toast.textContent = "⚠️ Konnte nicht kopieren (Browser-Rechte).";
+        toast.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
